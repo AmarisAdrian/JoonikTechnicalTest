@@ -21,19 +21,28 @@ class LocationIndexRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
+        return [
             'name' => 'nullable|string|max:255',
             'code' => 'nullable|string|max:10',
             'page' => 'nullable|integer|min:1',
             'per_page' => 'nullable|integer|min:1|max:100',
         ];
     }
-     public function sanitize()
+
+    public function sanitize(): void
     {
         $this->merge([
-            'name' => trim($this->input('name', '')),
-            'code' => strtoupper(trim($this->input('code', ''))),
+            'name' => $this->sanitizeString($this->input('name', '')),
+            'code' => $this->sanitizeString($this->input('code', '')),
         ]);
+    }
+
+    private function sanitizeString(mixed $value): string
+    {
+        if (is_scalar($value)) {
+            return trim((string) $value);
+        }
+        return '';
     }
 
     protected function prepareForValidation()
