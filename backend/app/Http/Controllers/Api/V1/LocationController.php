@@ -7,30 +7,44 @@ use App\Http\Requests\LocationIndexRequest;
 use App\Http\Requests\LocationStoreRequest;
 use App\Http\Resources\LocationResource;
 use App\Services\LocationService;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Http\JsonResponse;
 
 class LocationController extends Controller
 {
-    protected LocationService $service;
+    use ApiResponseTrait;
 
+    protected LocationService $service;
     public function __construct(LocationService $service)
     {
         $this->service = $service;
     }
 
-    public function index(LocationIndexRequest $request)
+    public function index(LocationIndexRequest $request): JsonResponse
     {
         $filters = $request->only(['name', 'code']);
-        $perPage = $request->input('per_page', 10);
-
+        /** @var array<string, string> $filters */
+        $filters = array_map(fn($v) => is_string($v) ? $v : '', $filters);
+        $perPage = filter_var($request->input('per_page'), FILTER_VALIDATE_INT) ?: 10;
         $locations = $this->service->getLocations($filters, $perPage);
 
-        return LocationResource::collection($locations);
+        if ($locations->isEmpty()) {
+            return $this->noContentResponse('No se encontraron ubicaciones. ');
+        }
+
+        return $this->successPaginatedResponse($locations, 'Lista de ubicaciones cargados. ');
     }
 
-    public function store(LocationStoreRequest $request)
+    public function store(LocationStoreRequest $request): JsonResponse
     {
-        $location = $this->service->createLocation($request->validated());
+        /** @var array<string, mixed> $validatedData */
+        $validatedData = $request->validated();
 
-        return new LocationResource($location);
+        $location = $this->service->createLocation($validatedData);
+
+        return $this->createdResponse(
+            (new LocationResource($location))->resolve(),
+            'Ubicación creada correctamente.'
+        );
     }
 }
