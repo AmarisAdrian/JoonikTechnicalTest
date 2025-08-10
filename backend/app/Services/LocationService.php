@@ -33,6 +33,8 @@ class LocationService
      */
     public function createLocation(array $data): Location
     {
+        $randomImageId = rand(1, 99);
+        $data['image'] = 'https://picsum.photos/400/300?random=' . $randomImageId;
         return Location::create($data);
     }
 }

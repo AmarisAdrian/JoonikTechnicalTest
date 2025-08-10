@@ -25,7 +25,7 @@ class LocationController extends Controller
         $filters = $request->only(['name', 'code']);
         /** @var array<string, string> $filters */
         $filters = array_map(fn($v) => is_string($v) ? $v : '', $filters);
-        $perPage = filter_var($request->input('per_page'), FILTER_VALIDATE_INT) ?: 10;
+        $perPage = filter_var($request->input('per_page'), FILTER_VALIDATE_INT) ?: 5;
         $locations = $this->service->getLocations($filters, $perPage);
 
         if ($locations->isEmpty()) {
