@@ -28,11 +28,14 @@ class LocationStoreRequest extends FormRequest
             'per_page' => 'nullable|integer|min:1|max:100',
         ];
     }
-    protected function prepareForValidation()
+
+    protected function prepareForValidation(): void
     {
+        $name = $this->input('name', '');
+        $code = $this->input('code', '');
         $this->merge([
-            'code' => strtoupper(trim($this->input('code'))),
-            'name' => trim($this->input('name')),
+            'name' => is_scalar($name) ? trim((string) $name) : '',
+            'code' => is_scalar($code) ? trim((string) $code) : '',
         ]);
     }
 }

@@ -1,35 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Container, Typography } from '@mui/material';
+import LocationList from './components/locations/LocationList';
+import LocationForm from './components/locations/LocationForm';
+import { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [refreshLocations, setRefreshLocations] = useState(false);
+
+  const handleSuccess = () => {
+    setRefreshLocations(prev => !prev);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Container maxWidth="md" sx={{ mt: 2, borderRadius: 2, p: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Gestión de Sedes
+      </Typography>
 
-export default App
+      <LocationForm onSuccess={handleSuccess} />
+
+      <LocationList refresh={refreshLocations} />
+    </Container>
+  );
+}
