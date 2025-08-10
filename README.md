@@ -26,13 +26,13 @@ siguiendo las mejores prácticas.
 2. Configurar variables de entorno en el entorno de docker 
 
      Archivo 1:  Configuración .ENV en backend : Debe copiar el archivo .env.example y modificar    
-      -DB_CONNECTION=sqlite
-      -DB_DATABASE=/var/www/html/database/database.sqlite
-      -API_KEY=tu_api_key
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/html/database/database.sqlite
+      - API_KEY=tu_api_key
    
     Archivo 2: Frontend/.env (Copiar de backend/.env.example y modificar):
-      -VITE_API_URL=http://localhost:8000/api/v1/
-      -VITE_API_KEY=tu_api_key
+      - VITE_API_URL=http://localhost:8000/api/v1/
+      - VITE_API_KEY=tu_api_key
    
 4. El proyecto se encuentra dockerizado por lo que al levantar el servicio se crea la base de datos, se ejecutan los seeders y las migraciones
 5. Para crear una imagen de la prueba debe ejecutar docker-compose  --build up -d
