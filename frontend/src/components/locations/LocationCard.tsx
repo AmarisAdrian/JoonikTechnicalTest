@@ -34,7 +34,7 @@ export default function LocationCard({ location, onEdit, onDelete }: LocationCar
       
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          {/* Cambiamos Typography a div para evitar problemas de anidación */}
+
           <Box component="div" sx={{ 
             fontSize: '1.25rem',
             fontWeight: 'bold',
@@ -63,7 +63,7 @@ export default function LocationCard({ location, onEdit, onDelete }: LocationCar
           </Box>
         </Box>
         
-        {/* Cambiamos la estructura para evitar p > div */}
+
         <Box mt={1} display="flex" alignItems="center" gap={1} component="div">
           <Code color="primary" fontSize="small" />
           <Box component="span" sx={{ fontSize: '0.875rem', color: 'text.secondary' }}>
