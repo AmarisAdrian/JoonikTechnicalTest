@@ -12,9 +12,6 @@ export default function App() {
 
   return (
     <Container maxWidth="md" sx={{ mt: 2, borderRadius: 2, p: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Gestión de Sedes
-      </Typography>
 
       <LocationForm onSuccess={handleSuccess} />
 

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\LocationFactory;
 
 /**
  * @property int $id
@@ -13,8 +15,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon $updated_at
  *
  * @method static self create(array<string, mixed> $attributes = [])
+ * @method static LocationFactory factory($count = null, $state = [])
  */
 class Location extends Model
 {
+    /** @use HasFactory<LocationFactory> */
+    use HasFactory;
+
     protected $fillable = ['name', 'code', 'image', 'created_at', 'updated_at'];
 }
