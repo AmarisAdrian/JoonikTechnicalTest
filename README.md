@@ -40,4 +40,34 @@ siguiendo las mejores prácticas.
     - FRONTEND : http://localhost:5173/
     - BACKEND  : http://localhost:8000/
 
+7. Para ejecutar PHP CodeSniffer debe entrar al contenedor de la api debe ejecutar en la terminal:
+   - docker exec -it api_locations sh   luego
+   - ./vendor/bin/phpcs --standard=PSR12 app/
+     
+   No debe mostrar resultado
+
+8.  Para ejecutar PHP STAN debe entrar al contenedor de la api debe ejecutar en la terminal
+    - docker exec -it api_locations sh   luego
+    - php -d memory_limit=1024M ./vendor/bin/phpstan analyse app --level=max
+      
+    Debe arrojar : [OK] No errors
+    
+10. Para ejecutar los test unitarios en el backend debe entrar al contenedor de la api debe ejecutar en la terminal
+    - docker exec -it api_locations sh   luego
+    - php artisan test --filter=LocationTest
+      
+      Debe arrojar :  PASS  Tests\Feature\LocationTest
+                    ✓ puede crear una sede                                                                                                           0.50s  
+                    ✓ puede listar sedes                                                                                                             0.01s  
+                    ✓ puede filtrar sedes por name                                                                                                   0.01s  
+                    ✓ puede filtrar sedes por code                                                                                                   0.01s  
+                    ✓ la paginacion funciona correctamente                                                                                           0.02s     
+                    Tests:    5 passed (25 assertions)
+                    Duration: 0.60s
+
+
+               
+ 
+ 
+
 
